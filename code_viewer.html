@@ -3,13 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <title>Code Viewer</title>
-    <link href="/dash-code/themes/prism.css" rel="stylesheet" />
+    <link id="prismCSS" rel="stylesheet" />
   </head>
-  <body>
+  <body class="line-numbers">
     <pre><code id="code-content" class="language-python"></code></pre>
-    <script src="/dash-code/assets/prism.js"></script>
+    <script id="prismJS"></script>
 
     <script>
+      function getBasePath() {
+        // Example: Adjust based on your deployment strategy
+        if (window.location.hostname.includes("github.io")) {
+          // Use your GitHub repository name here
+          return "/dash-code/";
+        } else {
+          // For local development or if hosted at the domain root
+          return "/";
+        }
+      }
+
+      function setResourcePaths() {
+        const basePath = getBasePath();
+        document.getElementById("prismCSS").href =
+          basePath + "themes/prism.css";
+        document.getElementById("prismJS").src = basePath + "assets/prism.js";
+      }
+      setResourcePaths();
+
       // Extract the filename from the URL query parameters
       const urlParams = new URLSearchParams(window.location.search);
       const filename = urlParams.get("file");
