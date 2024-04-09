@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Code Editor</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.18.0/full/pyodide.js"></script>
+    <style>
+      #editor {
+        height: 800px;
+        width: 100%;
+      }
+      #output {
+        white-space: pre-wrap;
+        background: #f4f4f4;
+        border: 1px solid #ddd;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <pre id="editor"></pre>
+    <button onclick="runCode()">Run Code</button>
+    <div id="output"></div>
+
+    <script>
+      let editor;
+      window.addEventListener("load", async () => {
+        editor = ace.edit("editor");
+        editor.session.setMode("ace/mode/python");
+        editor.setTheme("ace/theme/monokai");
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const filename = urlParams.get("file");
+        console.log("Filename:", filename);
+
+        try {
+          const response = await fetch(`code/${filename}`);
+          const text = await response.text();
+          editor.setValue(text, -1); // -1 moves cursor to the start
+        } catch (error) {
+          console.error("Error loading the file:", error);
+          editor.setValue("Error loading file: " + error.toString());
+        }
+      });
+
+      let pyodideReady = false;
+      let pyodide = null;
+
+      async function loadPyodideAndRun(code) {
+        if (!pyodideReady) {
+          pyodide = await loadPyodide({
+            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.18.0/full/",
+          });
+          pyodideReady = true;
+        }
+
+        try {
+          // Redirect print statements to console.log
+          await pyodide.loadPackage(["micropip"]);
+          pyodide.runPython(`
+            import io, sys
+            sys.stdout = io.StringIO()
+        `);
+
+          pyodide.runPython(code);
+          let output = pyodide.runPython("sys.stdout.getvalue()");
+          document.getElementById("output").textContent = `Output: ${output}`;
+        } catch (error) {
+          document.getElementById(
+            "output"
+          ).textContent = `Error: ${error.message}`;
+        }
+      }
+
+      function runCode() {
+        let code = editor.getValue(); // Assuming 'editor' is your Ace Editor instance
+        loadPyodideAndRun(code);
+      }
+    </script>
+  </body>
+</html>

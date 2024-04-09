@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>(Exec) Code File List</title>
+    <title>Coding Questions</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -33,6 +33,34 @@
       h1 {
         font-size: 24px;
         color: #333;
+      }
+      .list-item {
+        display: flex;
+        justify-content: space-between; /* Aligns children (link and button) on opposite ends */
+        align-items: center; /* Centers children vertically */
+        padding: 10px; /* Adds some padding inside the divs */
+        border-bottom: 1px solid #ccc; /* Adds a bottom border to each div */
+        margin-bottom: 10px; /* Adds some space between the divs */
+      }
+
+      .list-item a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .list-item button {
+        padding: 5px 10px;
+        background-color: #6b5638;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .list-item button:hover {
+        background-color: #0056b3;
       }
     </style>
   </head>
@@ -159,8 +187,19 @@
         const fileLink = document.createElement("a");
         fileLink.href = `code_viewer.html?file=${file.FileName}`;
         fileLink.innerText = file.Title;
+
+        // Create a button element
+        const button = document.createElement("button");
+        button.innerText = "Editor"; // Text can be customized
+        // Set onclick event to redirect
+        button.onclick = function () {
+          window.location.href = `code_editor.html?file=${file.FileName}`;
+        };
+
         const listItem = document.createElement("div");
+        listItem.className = "list-item";
         listItem.appendChild(fileLink);
+        listItem.appendChild(button);
         fileListElement.appendChild(listItem);
       });
     </script>
