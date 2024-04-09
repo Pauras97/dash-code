@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Code File List</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        font-size: 18px;
+      }
+      #file-list {
+        column-count: 2; /* Adjust the number of columns as needed */
+        column-gap: 40px; /* Adjust the gap between columns */
+        max-width: 100%; /* Prevents the layout from stretching too far on wide screens */
+      }
+      #file-list div {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        break-inside: avoid; /* Prevents items from splitting across columns */
+        -webkit-column-break-inside: avoid; /* For Safari */
+      }
+      #file-list a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+      }
+      #file-list a:hover {
+        text-decoration: underline;
+        color: blue;
+      }
+      h1 {
+        font-size: 24px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="file-list"></div>
+
+    <script>
+      // Example JSON array
+      const files = [
+        { Title: "Dice Roll Permutations", FileName: "allDicePerms.py" },
+        {
+          Title: "Changes in Tree (with Active Nodes as well)",
+          FileName: "changeInTree.py",
+        },
+        { Title: "Nearest City Along X/Y axis", FileName: "cityAlongXY.py" },
+        {
+          Title: "Doordash City Dasher Locations",
+          FileName: "cityDashLocation.py",
+        },
+        {
+          Title: "Count SubIslands (with 40% follow-up)",
+          FileName: "countSubIslands.py",
+        },
+        {
+          Title: "Count All Valid Pickup/Delivery possible sequences",
+          FileName: "countValidDeliveries.py",
+        },
+        {
+          Title: "Dasher Maximize Pay (w/ overlaps as well)",
+          FileName: "dasherMaxPay.py",
+        },
+        { Title: "Design File System (TRIE)", FileName: "designFile.py" },
+        {
+          Title: "Eligible Orders (DLL with Heap)",
+          FileName: "eligibleOrders.py",
+        },
+        {
+          Title: "Employee Free Time Interval",
+          FileName: "emplFreeTimeInterval.py",
+        },
+        {
+          Title: "Substrings with Exact K Unique Chars",
+          FileName: "exactKUniqueChars.py",
+        },
+        {
+          Title: "Get Longest Valid Order",
+          FileName: "getLongestValidOrder.py",
+        },
+        {
+          Title: "Idle Time and Active Time of Dasher",
+          FileName: "idleActiveTime.py",
+        },
+        { Title: "Koko Eating Bananas", FileName: "koko.py" },
+        {
+          Title: "Longest Increasing Path in a Grid",
+          FileName: "longestIncreasingPath.py",
+        },
+        {
+          Title: "Longest Path with Same Value in Grid",
+          FileName: "longestPathSameVal.py",
+        },
+        {
+          Title: "m Jobs, n Processes Balanced Schedule",
+          FileName: "mNJobsBalancedSchedule.py",
+        },
+        { Title: "Making a Large Island", FileName: "makeLargeIsland.py" },
+        {
+          Title: "Maximum Calories (0/1 Knapsack)",
+          FileName: "maxCalories.py",
+        },
+        {
+          Title: "Max Path Sum Tree (also has Leaves logic)",
+          FileName: "maxPathSum.py",
+        },
+        {
+          Title: "max Value from last X seconds in Stream",
+          FileName: "maxValStream.py",
+        },
+        { Title: "Menu Tree (TRIE)", FileName: "menuTree.py" },
+        {
+          Title: "Most Profit Assigning work given Skill and Difficulty",
+          FileName: "mostProfitWorkDifficulty.py",
+        },
+        {
+          Title: "Number Of Islands 2 Union Find",
+          FileName: "numIslands2UF.py",
+        },
+        {
+          Title: "Roads along the Shortest Path",
+          FileName: "roadsOnShortPath.py",
+        },
+        {
+          Title: "Schedule Available Deliveries for Dashers",
+          FileName: "scheduleAvailDeliveries.py",
+        },
+        {
+          Title: "Search k words with Prefix (TRIE)",
+          FileName: "searchKPrefix.py",
+        },
+        {
+          Title: "Shortest Distance From All Buildings",
+          FileName: "shortestDistBuilding.py",
+        },
+        { Title: "Solve Sudoku", FileName: "solveSudoku.py" },
+        {
+          Title: "Time Interval Increments Tokens",
+          FileName: "timeIntervalTokens.py",
+        },
+        { Title: "Tree Changes", FileName: "treeChanges.py" },
+        {
+          Title:
+            "Tree Zones Score OR Get highest score after removing nodes and edges",
+          FileName: "treeZones.py",
+        },
+        {
+          Title: "User Website Visit Pattern",
+          FileName: "websiteVisitPattern.py",
+        },
+      ];
+
+      // Generate links dynamically from the JSON array
+      const fileListElement = document.getElementById("file-list");
+      files.forEach((file) => {
+        const fileLink = document.createElement("a");
+        fileLink.href = `code_viewer.html?file=${file.FileName}`;
+        fileLink.innerText = file.Title;
+        const listItem = document.createElement("div");
+        listItem.appendChild(fileLink);
+        fileListElement.appendChild(listItem);
+      });
+    </script>
+  </body>
+</html>
