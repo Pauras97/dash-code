@@ -5,6 +5,43 @@
 
 # The grid is provided as a 2D array, and a list of locations is provided where each location is a pair `[row, col]`.
 
+def get_closest_dashmart(city, locations):
+
+    output = [[-1]*len(city[0]) for _ in range(len(city))]
+
+    R, C = len(city), len(city[0])
+    visited = set()
+    queue = deque()
+
+    for row in range(R):
+        for col in range(C):
+            if city[row][col] == 'D':
+                queue.append((row, col))
+                visited.add((row, col))
+
+    def addRoom(row, col):
+        if not 0 <= row < R or not 0 <= col < C or (row,col) in visited or city[row][col] == 'X':
+            return
+
+        visited.add((row, col))
+        queue.append((row, col))
+
+    dist = 0
+    while queue:
+        for _ in range(len(queue)):
+            r,c = queue.popleft()
+            output[r][c] = dist
+            addRoom(r+1, c)
+            addRoom(r-1, c)
+            addRoom(r, c+1)
+            addRoom(r, c-1)
+        dist += 1
+
+    ans = []
+    for row, col in locations:
+        ans.append(output[row][col])
+    return ans
+
 
 city = [['X', 'O', 'O', 'D', 'O', 'O', 'X', 'O', 'X'],
         ['X', 'O', 'X', 'X', 'X', 'O', 'X', 'O', 'X'],
@@ -19,36 +56,18 @@ locations = [[0,5],
             [5, 6],
             [2, 1]]
 
-output = [[-1]*len(city[0]) for _ in range(len(city))]
+print(get_closest_dashmart(city, locations))
 
-R, C = len(city), len(city[0])
-visited = set()
-queue = deque()
+city = [['X', 'O', 'O', 'D', 'O', '0', 'X', 'O', 'X'],
+        ['X', 'O', 'X', 'X', 'O', '0', 'O', 'O', 'X'],
+        ['O', 'O', 'O', 'D', 'X', 'X', 'O', 'X', 'O'],
+        ['O', 'O', 'O', 'D', 'O', 'X', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O', 'O', 'X', 'O', 'O', 'X'],
+        ['O', 'O', 'O', 'O', 'X', 'O', 'O', 'X', 'X']]
 
-for row in range(R):
-    for col in range(C):
-        if city[row][col] == 'D':
-            queue.append((row, col))
-            visited.add((row, col))
+locations = [[2,2],
+            [4,0],
+            [0,4],
+            [2,6]]
 
-def addRoom(row, col):
-    if not 0 <= row < R or not 0 <= col < C or (row,col) in visited or city[row][col] == 'X':
-        return
-    
-    visited.add((row, col))
-    queue.append((row, col))
-
-dist = 0
-while queue:
-    for _ in range(len(queue)):
-        r,c = queue.popleft()
-        output[r][c] = dist
-        addRoom(r+1, c)
-        addRoom(r-1, c)
-        addRoom(r, c+1)
-        addRoom(r, c-1)
-    dist += 1
-
-for row, col in locations:
-    print(output[row][col])
-            
+print(get_closest_dashmart(city, locations))
