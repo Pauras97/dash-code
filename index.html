@@ -6,7 +6,7 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        margin: 20px;
+        margin: 0 20px 0 20px;
         font-size: 18px;
       }
       #file-list {
@@ -15,9 +15,6 @@
         max-width: 100%; /* Prevents the layout from stretching too far on wide screens */
       }
       #file-list div {
-        margin-bottom: 10px;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
         break-inside: avoid; /* Prevents items from splitting across columns */
         -webkit-column-break-inside: avoid; /* For Safari */
       }
@@ -49,9 +46,13 @@
         font-weight: bold;
       }
 
-      .list-item button {
+      .button-div {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .button-div button {
         padding: 5px 10px;
-        background-color: #6b5638;
         color: white;
         border: none;
         border-radius: 5px;
@@ -59,8 +60,18 @@
         font-size: 16px;
       }
 
-      .list-item button:hover {
-        background-color: #0056b3;
+      .button-div button:last-child {
+        margin-bottom: 0;
+      }
+      .button-div button:hover {
+        opacity: 0.8;
+      }
+      .editor-button {
+        background-color: #008cba;
+        margin-right: 10px;
+      }
+      .leetcode-button {
+        background-color: #d0a326;
       }
     </style>
   </head>
@@ -69,115 +80,284 @@
 
     <script>
       // Example JSON array
+      // const files = [
+      //   { Title: "Dice Roll Permutations", FileName: "allDicePerms.py" },
+      //   {
+      //     Title: "Changes in Tree (with Active Nodes as well)",
+      //     FileName: "changeInTree.py",
+      //   },
+      //   { Title: "Nearest City Along X/Y axis", FileName: "cityAlongXY.py" },
+      //   {
+      //     Title: "Closest DashMart in City Locations",
+      //     FileName: "cityDashLocation.py",
+      //   },
+      //   {
+      //     Title: "Count SubIslands (with 40% follow-up)",
+      //     FileName: "countSubIslands.py",
+      //   },
+      //   {
+      //     Title: "Count All Valid Pickup/Delivery possible sequences",
+      //     FileName: "countValidDeliveries.py",
+      //   },
+      //   {
+      //     Title: "Dasher Maximize Pay (w/ overlaps as well)",
+      //     FileName: "dasherMaxPay.py",
+      //   },
+      //   { Title: "Design File System (TRIE)", FileName: "designFile.py" },
+      //   {
+      //     Title: "Eligible Orders (DLL with Heap)",
+      //     FileName: "eligibleOrders.py",
+      //   },
+      //   {
+      //     Title: "Employee Free Time Interval",
+      //     FileName: "emplFreeTimeInterval.py",
+      //   },
+      //   {
+      //     Title: "Substrings with Exact K Unique Chars",
+      //     FileName: "exactKUniqueChars.py",
+      //   },
+      //   {
+      //     Title: "Get Longest Valid Order",
+      //     FileName: "getLongestValidOrder.py",
+      //   },
+      //   {
+      //     Title: "Idle Time and Active Time of Dasher",
+      //     FileName: "idleActiveTime.py",
+      //   },
+      //   { Title: "Koko Eating Bananas", FileName: "koko.py" },
+      //   {
+      //     Title: "Longest Increasing Path in a Grid",
+      //     FileName: "longestIncreasingPath.py",
+      //   },
+      //   {
+      //     Title: "Longest Path with Same Value in Grid",
+      //     FileName: "longestPathSameVal.py",
+      //   },
+      //   {
+      //     Title: "m Jobs, n Processes Balanced Schedule",
+      //     FileName: "mNJobsBalancedSchedule.py",
+      //   },
+      //   { Title: "Making a Large Island", FileName: "makeLargeIsland.py" },
+      //   {
+      //     Title: "Maximum Calories (0/1 Knapsack)",
+      //     FileName: "maxCalories.py",
+      //   },
+      //   {
+      //     Title: "Max Path Sum Tree (also has Leaves logic)",
+      //     FileName: "maxPathSum.py",
+      //   },
+      //   {
+      //     Title: "max Value from last X seconds in Stream",
+      //     FileName: "maxValStream.py",
+      //   },
+      //   { Title: "Menu Tree (TRIE)", FileName: "menuTree.py" },
+      //   {
+      //     Title: "Most Profit Assigning work given Skill and Difficulty",
+      //     FileName: "mostProfitWorkDifficulty.py",
+      //   },
+      //   {
+      //     Title: "Number Of Islands 2 Union Find",
+      //     FileName: "numIslands2UF.py",
+      //   },
+      //   {
+      //     Title: "Roads along the Shortest Path",
+      //     FileName: "roadsOnShortPath.py",
+      //   },
+      //   {
+      //     Title: "Schedule Available Deliveries for Dashers",
+      //     FileName: "scheduleAvailDeliveries.py",
+      //   },
+      //   {
+      //     Title: "Search k words with Prefix (TRIE)",
+      //     FileName: "searchKPrefix.py",
+      //   },
+      //   {
+      //     Title: "Shortest Distance From All Buildings",
+      //     FileName: "shortestDistBuilding.py",
+      //   },
+      //   { Title: "Solve Sudoku", FileName: "solveSudoku.py" },
+      //   {
+      //     Title: "Time Interval Increments Tokens",
+      //     FileName: "timeIntervalTokens.py",
+      //   },
+      //   { Title: "Tree Changes", FileName: "treeChanges.py" },
+      //   {
+      //     Title:
+      //       "Tree Zones Score OR Get highest score after removing nodes and edges",
+      //     FileName: "treeZones.py",
+      //   },
+      //   {
+      //     Title: "User Website Visit Pattern",
+      //     FileName: "websiteVisitPattern.py",
+      //   },
+      // ];
+
       const files = [
-        { Title: "Dice Roll Permutations", FileName: "allDicePerms.py" },
+        {
+          Title: "Dice Roll Permutations",
+          FileName: "allDicePerms.py",
+          "playground-url": "https://leetcode.com/playground/4AezpWTu",
+        },
         {
           Title: "Changes in Tree (with Active Nodes as well)",
           FileName: "changeInTree.py",
+          "playground-url": "https://leetcode.com/playground/JWToavsP",
         },
-        { Title: "Nearest City Along X/Y axis", FileName: "cityAlongXY.py" },
+        {
+          Title: "Nearest City Along X/Y axis",
+          FileName: "cityAlongXY.py",
+          "playground-url": "https://leetcode.com/playground/REiY62uu",
+        },
         {
           Title: "Closest DashMart in City Locations",
           FileName: "cityDashLocation.py",
+          "playground-url": "https://leetcode.com/playground/fZdHbUvE",
         },
         {
           Title: "Count SubIslands (with 40% follow-up)",
           FileName: "countSubIslands.py",
+          "playground-url": "https://leetcode.com/playground/Gp3fv9Ja",
         },
         {
           Title: "Count All Valid Pickup/Delivery possible sequences",
           FileName: "countValidDeliveries.py",
+          "playground-url": "https://leetcode.com/playground/bxTakL6E",
         },
         {
           Title: "Dasher Maximize Pay (w/ overlaps as well)",
           FileName: "dasherMaxPay.py",
+          "playground-url": "https://leetcode.com/playground/YLbdwTMv",
         },
-        { Title: "Design File System (TRIE)", FileName: "designFile.py" },
+        {
+          Title: "Design File System (TRIE)",
+          FileName: "designFile.py",
+          "playground-url": "https://leetcode.com/playground/m7fMedDz",
+        },
         {
           Title: "Eligible Orders (DLL with Heap)",
           FileName: "eligibleOrders.py",
+          "playground-url": "https://leetcode.com/playground/XgvYYvYF",
         },
         {
           Title: "Employee Free Time Interval",
           FileName: "emplFreeTimeInterval.py",
+          "playground-url": "https://leetcode.com/playground/5FdPVzEU",
         },
         {
           Title: "Substrings with Exact K Unique Chars",
           FileName: "exactKUniqueChars.py",
+          "playground-url": "https://leetcode.com/playground/2mJDtj5o",
         },
         {
           Title: "Get Longest Valid Order",
           FileName: "getLongestValidOrder.py",
+          "playground-url": "https://leetcode.com/playground/9QYqZ4m2",
         },
         {
           Title: "Idle Time and Active Time of Dasher",
           FileName: "idleActiveTime.py",
+          "playground-url": "https://leetcode.com/playground/CNFjkvHH",
         },
-        { Title: "Koko Eating Bananas", FileName: "koko.py" },
+        {
+          Title: "Koko Eating Bananas",
+          FileName: "koko.py",
+          "playground-url": "https://leetcode.com/playground/A9DfCYzx",
+        },
         {
           Title: "Longest Increasing Path in a Grid",
           FileName: "longestIncreasingPath.py",
+          "playground-url": "https://leetcode.com/playground/RnHDEkCW",
         },
         {
           Title: "Longest Path with Same Value in Grid",
           FileName: "longestPathSameVal.py",
+          "playground-url": "https://leetcode.com/playground/Pe932MGE",
         },
         {
           Title: "m Jobs, n Processes Balanced Schedule",
           FileName: "mNJobsBalancedSchedule.py",
+          "playground-url": "https://leetcode.com/playground/JWbFeSbH",
         },
-        { Title: "Making a Large Island", FileName: "makeLargeIsland.py" },
+        {
+          Title: "Making a Large Island",
+          FileName: "makeLargeIsland.py",
+          "playground-url": "https://leetcode.com/playground/HyWewAba",
+        },
         {
           Title: "Maximum Calories (0/1 Knapsack)",
           FileName: "maxCalories.py",
+          "playground-url": "https://leetcode.com/playground/bXD7vRUM",
         },
         {
           Title: "Max Path Sum Tree (also has Leaves logic)",
           FileName: "maxPathSum.py",
+          "playground-url": "https://leetcode.com/playground/dqJUMFwY",
         },
         {
           Title: "max Value from last X seconds in Stream",
           FileName: "maxValStream.py",
+          "playground-url": "https://leetcode.com/playground/UDwGeaLN",
         },
-        { Title: "Menu Tree (TRIE)", FileName: "menuTree.py" },
+        {
+          Title: "Menu Tree (TRIE)",
+          FileName: "menuTree.py",
+          "playground-url": "https://leetcode.com/playground/SAgkVaK9",
+        },
         {
           Title: "Most Profit Assigning work given Skill and Difficulty",
           FileName: "mostProfitWorkDifficulty.py",
+          "playground-url": "https://leetcode.com/playground/ReeiFBgs",
         },
         {
           Title: "Number Of Islands 2 Union Find",
           FileName: "numIslands2UF.py",
+          "playground-url": "https://leetcode.com/playground/WwnrPmsD",
         },
         {
           Title: "Roads along the Shortest Path",
           FileName: "roadsOnShortPath.py",
+          "playground-url": "https://leetcode.com/playground/iVVvvQn9",
         },
         {
           Title: "Schedule Available Deliveries for Dashers",
           FileName: "scheduleAvailDeliveries.py",
+          "playground-url": "https://leetcode.com/playground/KM2eQyAu",
         },
         {
           Title: "Search k words with Prefix (TRIE)",
           FileName: "searchKPrefix.py",
+          "playground-url": "https://leetcode.com/playground/ibpCkAmy",
         },
         {
           Title: "Shortest Distance From All Buildings",
           FileName: "shortestDistBuilding.py",
+          "playground-url": "https://leetcode.com/playground/H4uCgFgz",
         },
-        { Title: "Solve Sudoku", FileName: "solveSudoku.py" },
+        {
+          Title: "Solve Sudoku",
+          FileName: "solveSudoku.py",
+          "playground-url": "https://leetcode.com/playground/LZbTptUF",
+        },
         {
           Title: "Time Interval Increments Tokens",
           FileName: "timeIntervalTokens.py",
+          "playground-url": "https://leetcode.com/playground/hPP7hcTS",
         },
-        { Title: "Tree Changes", FileName: "treeChanges.py" },
+        {
+          Title: "Tree Changes",
+          FileName: "treeChanges.py",
+          "playground-url": "https://leetcode.com/playground/C3tvfmxV",
+        },
         {
           Title:
             "Tree Zones Score OR Get highest score after removing nodes and edges",
           FileName: "treeZones.py",
+          "playground-url": "https://leetcode.com/playground/QHwMrCMS",
         },
         {
           Title: "User Website Visit Pattern",
           FileName: "websiteVisitPattern.py",
+          "playground-url": "https://leetcode.com/playground/jU8rxt5U",
         },
       ];
 
@@ -190,16 +370,28 @@
 
         // Create a button element
         const button = document.createElement("button");
-        button.innerText = "Editor"; // Text can be customized
-        // Set onclick event to redirect
+        button.innerText = "Editor";
+        button.className = "editor-button";
         button.onclick = function () {
           window.location.href = `code_editor.html?file=${file.FileName}`;
         };
 
+        const leetcodeButton = document.createElement("button");
+        leetcodeButton.innerText = "LC";
+        leetcodeButton.className = "leetcode-button";
+        leetcodeButton.onclick = function () {
+          window.open(file["playground-url"], "_blank");
+        };
+
+        const buttonDiv = document.createElement("div");
+        buttonDiv.className = "button-div";
+        buttonDiv.appendChild(button);
+        buttonDiv.appendChild(leetcodeButton);
+
         const listItem = document.createElement("div");
         listItem.className = "list-item";
         listItem.appendChild(fileLink);
-        listItem.appendChild(button);
+        listItem.appendChild(buttonDiv);
         fileListElement.appendChild(listItem);
       });
     </script>
